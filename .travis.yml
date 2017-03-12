@@ -8,7 +8,7 @@ addons:
     - dh-make
     - bzr-builddeb
 rvm:
-- 2.2
+- 2.3
 #env:
 #  global:
 #  - NO_EXCLUDE=yes
