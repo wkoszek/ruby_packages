@@ -1,4 +1,4 @@
-language: c
+language: ruby
 addons:
   apt:
     packages:
@@ -6,6 +6,8 @@ addons:
     - bzr
     - dh-make
     - bzr-builddeb
+rvm:
+- 2.3.3
 #env:
 #  global:
 #  - NO_EXCLUDE=yes
