@@ -3,7 +3,7 @@ Section: ruby
 Priority: optional
 Maintainer: Wojciech Adam Koszek <wojciech@koszek.com>
 Build-Depends: debhelper (>= 8.0.0), autotools-dev
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: https://github.com/wkoszek/ruby_packages
 #Vcs-Git: git://git.debian.org/collab-maint/ruby.git
 #Vcs-Browser: http://git.debian.org/?p=collab-maint/ruby.git;a=summary

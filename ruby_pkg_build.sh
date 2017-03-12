@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ "$1" == "" ]; then
+if [ "x$1" = "x" ]; then
 	echo "$0 you must pass Ruby version"
 	exit 1
 fi
@@ -36,10 +36,11 @@ echo "# Will take the directory from autoconf and build tarball with Makefile"
 tar czf ${V_UNZIPPED}.tar.gz ${V_UNZIPPED}
 
 echo "# Running dh-make now"
-bzr dh-make ruby ${V} ${V_UNZIPPED}
+echo "s" | bzr dh-make ruby ${V} ${V_UNZIPPED}
 
-echo "# Remove ex/EX files"
+echo "# Remove ex/EX files and copy templates over"
 rm ruby/debian/*ex* ruby/debian/*EX*
+cp debian/* ruby/debian/
 
 echo "# Will build a package now"
 (
