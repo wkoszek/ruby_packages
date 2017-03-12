@@ -15,6 +15,7 @@ rvm:
 #  matrix:
 #  - RUBYVER=check
 script:
+- ruby -v
 - make bootstrap
 - make p
 #after_script:
