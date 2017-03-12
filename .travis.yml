@@ -1,0 +1,20 @@
+language: c
+addons:
+  apt:
+    packages:
+    - build-essential
+    - bzr
+    - dh-make
+    - bzr-builddeb
+#env:
+#  global:
+#  - NO_EXCLUDE=yes
+#  matrix:
+#  - RUBYVER=check
+script:
+- ./ruby_pkg_build.sh 2.4.0
+#after_script:
+#- scripts/submit.sh
+branches:
+  only:
+    - master
