@@ -1,0 +1,14 @@
+Wojciech's Ruby .deb package
+---------------
+
+Wojciech's Ruby .deb package.
+
+Built by scripts from:
+
+	https://github.com/wkoszek/ruby_packages
+
+The Ruby source tarball comes from:
+
+	https://github.com/ruby/ruby/releases
+
+ -- Wojciech Adam Koszek <wojciech@koszek.com>  Sat, 11 Mar 2017 22:15:01 -0500
