@@ -3,11 +3,12 @@ addons:
   apt:
     packages:
     - build-essential
+    - software-properties-common
     - bzr
     - dh-make
     - bzr-builddeb
 rvm:
-- 2.3.3
+- 2.2
 #env:
 #  global:
 #  - NO_EXCLUDE=yes
