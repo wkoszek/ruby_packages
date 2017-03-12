@@ -12,7 +12,8 @@ addons:
 #  matrix:
 #  - RUBYVER=check
 script:
-- ./ruby_pkg_build.sh 2.4.0
+- make bootstrap
+- make p
 #after_script:
 #- scripts/submit.sh
 branches:
