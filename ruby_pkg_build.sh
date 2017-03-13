@@ -62,7 +62,7 @@ echo "# Will build a package now"
 )
 
 if [ "x$CI" != "x" ]; then
-	source ~/.ssh/agent_env
+	. ~/.ssh/agent_env
 	chmod 600 etc/deploy
 	ssh-add etc/deploy
 	TAG_NAME="${V_PREFIXED}_${TRAVIS_JOB_ID}"
