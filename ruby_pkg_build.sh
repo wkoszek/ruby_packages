@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+set -e
+
 if [ "x$1" = "x" ]; then
 	echo "$0 you must pass Ruby version"
 	exit 1
@@ -28,7 +30,7 @@ tar xzf $V_FILENAME
 echo "# Will autoconf and configure the package now"
 (
 	cd ${V_UNZIPPED}
-	make -f common.mk BASERUBY=ruby MAKEDIRS='mkdir -p' srcdir=.  update-config_files
+#	make -f common.mk BASERUBY=ruby MAKEDIRS='mkdir -p' srcdir=.  update-config_files
 	autoconf
 	./configure -C --with-gcc=$CC
 	#./configure -C --disable-install-doc --with-gcc=$CC $CONFIG_FLAG
@@ -37,11 +39,18 @@ echo "# Will autoconf and configure the package now"
 echo "# Will take the directory from autoconf and build tarball with Makefile"
 tar czf ${V_UNZIPPED}.tar.gz ${V_UNZIPPED}
 
-echo "# Running dh-make now"
-echo "s" | bzr dh-make ruby ${V} ${V_UNZIPPED}
+# The bzr will ask something like this
+#	Type of package: (single, indep, library, python)
+#	[s/i/l/p]?
+# and I send it "s". It works, but is unhappy at the end (Inappropriate ioctl
+# for a device), returns non-zero, so I counter-smack it with "true" so that
+# set -e of this shell script doesn't terminate. Alternative would be to use
+# `expect`, but it requires 178MB of packages on Ubuntu.
+echo "s" | bzr dh-make ruby ${V} ${V_UNZIPPED} || true
 
 echo "# Remove ex/EX files and copy templates over"
-rm ruby/debian/*ex* ruby/debian/*EX*
+ls -ld ruby/debian/*
+rm -rf ruby/debian/*ex* ruby/debian/*EX*
 cp debian/* ruby/debian/
 
 echo "# Will build a package now"
