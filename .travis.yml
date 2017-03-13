@@ -1,6 +1,10 @@
 dist: trusty
 sudo: required
-language: ruby
+language: c
+os:
+  - linux
+compiler:
+  - gcc
 addons:
   apt:
     packages:
@@ -9,14 +13,17 @@ addons:
     - bzr
     - dh-make
     - bzr-builddeb
-rvm:
-- 2.2
+#rvm:
+#- 2.4.0
 #env:
 #  global:
 #  - NO_EXCLUDE=yes
 #  matrix:
 #  - RUBYVER=check
 script:
+- ruby -v
+- which ruby
+- /usr/bin/ruby -v
 - make bootstrap
 - make p
 #after_script:
