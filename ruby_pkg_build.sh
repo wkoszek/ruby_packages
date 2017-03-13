@@ -2,11 +2,6 @@
 
 set -e
 
-if [ "x$1" = "x" ]; then
-	echo "$0 you must pass Ruby version"
-	exit 1
-fi
-
 export DEBEMAIL="wojciech@koszek.com"
 export DEBFULLNAME="Wojciech Adam Koszek"
 
@@ -67,6 +62,11 @@ echo "# Will build a package now"
 )
 
 if [ "x$CI" != "x" ]; then
-	git tag -a ${V_PREFIXED}_${TRAVIS_JOB_ID} -m "Ruby ${V_} build on Travis job ${TRAVIS_JOB_ID}"
+	source ~/.ssh/agent_env
+	chmod 600 etc/deploy
+	ssh-add etc/deploy
+	TAG_NAME="${V_PREFIXED}_${TRAVIS_JOB_ID}"
+	git tag -a "$TAG_NAME" -m "Ruby ${V_} build on Travis job ${TRAVIS_JOB_ID}"
 	git push --tags
+	./make-release.rb `/bin/ls -1 *.deb` $TAG_NAME
 fi

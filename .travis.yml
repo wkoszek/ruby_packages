@@ -13,6 +13,13 @@ addons:
     - bzr
     - dh-make
     - bzr-builddeb
+before_install:
+- ssh-agent > ~/.ssh/agent_env
+- openssl aes-256-cbc -K $encrypted_4e3668ecae45_key -iv $encrypted_4e3668ecae45_iv -in etc/deploy.enc -out etc/deploy -d
+- chmod 600 etc/deploy
+- git config --global user.email "wojciech@koszek.com"
+- git config --global user.name "Wojciech A. Koszek"
+- git remote add github git@github.com:wkoszek/ruby_packages.git
 env:
   global:
   - RUBY_PKG_VERSION=2.4.0

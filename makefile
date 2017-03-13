@@ -2,6 +2,7 @@ usage:
 	@echo "make p	make a Ruby package"
 bootstrap:
 	bzr whoami "Wojciech Adam Koszek <wojciech@koszek.com>"
+	bundle install
 p:
 	./ruby_pkg_build.sh
 clean:
