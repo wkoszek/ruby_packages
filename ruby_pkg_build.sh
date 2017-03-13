@@ -15,7 +15,8 @@ if [ "x$RUBY_PKG_VERSION" != "x" ]; then
   V=$RUBY_PKG_VERSION
 fi
 V_=`echo $V | sed 's{\.{_{g'`
-V_FILENAME=v${V_}.tar.gz
+V_PREFIXED=v${V_}
+V_FILENAME=${V_PREFIXED}.tar.gz
 V_UNZIPPED=ruby-${V_}
 
 echo "# V $V V_ $V_ V_FILENAME $V_FILENAME V_UNZIPPED $V_UNZIPPED"
@@ -64,3 +65,8 @@ echo "# Will build a package now"
 	cd debian
 	bzr builddeb -- -us -uc
 )
+
+if [ "x$CI" != "x" ]; then
+	git tag -a ${V_PREFIXED}_${TRAVIS_JOB_ID} -m "Ruby ${V_} build on Travis job ${TRAVIS_JOB_ID}"
+	git push --tags
+fi
