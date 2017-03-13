@@ -11,6 +11,9 @@ export DEBEMAIL="wojciech@koszek.com"
 export DEBFULLNAME="Wojciech Adam Koszek"
 
 V=2.4.0
+if [ "x$RUBY_PKG_VERSION" != "x" ]; then
+  V=$RUBY_PKG_VERSION
+fi
 V_=`echo $V | sed 's{\.{_{g'`
 V_FILENAME=v${V_}.tar.gz
 V_UNZIPPED=ruby-${V_}

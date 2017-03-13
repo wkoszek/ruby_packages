@@ -13,11 +13,9 @@ addons:
     - bzr
     - dh-make
     - bzr-builddeb
-#rvm:
-#- 2.4.0
-#env:
-#  global:
-#  - NO_EXCLUDE=yes
+env:
+  global:
+  - RUBY_PKG_VERSION=2.4.0
 #  matrix:
 #  - RUBYVER=check
 script:
