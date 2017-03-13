@@ -67,6 +67,7 @@ if [ "x$CI" != "x" ]; then
 	ssh-add etc/deploy
 	TAG_NAME="${V_PREFIXED}_${TRAVIS_JOB_ID}"
 	git tag -a "$TAG_NAME" -m "Ruby ${V_} build on Travis job ${TRAVIS_JOB_ID}"
-	git push --tags
+	git remote add github git@github.com:wkoszek/ruby_packages.git
+	git push --tags origin github
 	./make-release.rb `/bin/ls -1 *.deb` $TAG_NAME
 fi

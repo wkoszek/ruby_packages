@@ -19,7 +19,6 @@ before_install:
 - chmod 600 etc/deploy
 - git config --global user.email "wojciech@koszek.com"
 - git config --global user.name "Wojciech A. Koszek"
-- git remote add github git@github.com:wkoszek/ruby_packages.git
 env:
   global:
   - RUBY_PKG_VERSION=2.4.0
