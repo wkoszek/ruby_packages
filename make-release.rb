@@ -65,7 +65,7 @@ def main
 
   releases = client.releases(REPO_NAME)
 
-  rel = client.create_release(REPO_NAME, "master", {
+  rel = client.create_release(REPO_NAME, tag_name, {
     :name => "Ruby #{VER} package #{JOB}",
     :body => make_rel_notes_body(),
   })
