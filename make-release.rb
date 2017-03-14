@@ -21,7 +21,7 @@ def travis_get_info
   env_names = TRAVIS_ENV_VARS
   msg = "## Travis info\n\n"
   env_names.each do |en|
-    msg += "#{en}\t#{ENV[en]}\n"
+    msg += "\`#{en}\`\t#{ENV[en]}\n"
   end
   return msg
 end
@@ -30,29 +30,31 @@ def make_travis_url(build_id)
   return "https://travis-ci.org/wkoszek/ruby_packages/builds/#{build_id}"
 end
 
-def make_rel_notes_body(url, build_id)
+def make_rel_notes_body(url)
   msg = "## Wojciech's Ruby release"
-  msg += "\n"
-  msg += "\n"
+  msg += "\n\n"
+
   msg += "Release built at \`#{Time.now}\` at Travis CI. Ruby version was \`#{VER}\`"
-  msg += "\n"
-  msg += "\n"
+  msg += "\n\n"
+
+  msg += "Source: [#{url}](#{url})\n\n"
+  msg += "\n\n"
 
   build_id = ENV['TRAVIS_BUILD_ID']
   travis_url = make_travis_url(build_id)
   msg += "Build log: [#{travis_url}](#{travis_url})\n"
+  msg += "\n\n"
 
-  msg += "\n"
-  msg += "\n"
   msg += "The sources for the release came from [#{url}](#{url})."
-  msg += "\n"
-  msg += "\n```\n"
+  msg += "\n\n"
+
+  msg += '```\n'
   msg += `openssl sha1 *.tar.gz *.deb 2>/dev/null`
-  msg += "\n```\n"
-  msg += "\n```\n"
+  msg += '```\n'
+
   msg += travis_get_info()
-  msg += "\n```\n"
-  msg += "\n"
+  msg += "\n\n"
+
   return msg
 end
 
