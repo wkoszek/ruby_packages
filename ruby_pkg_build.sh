@@ -68,6 +68,6 @@ if [ "x$CI" != "x" ]; then
 	TAG_NAME="${V_PREFIXED}_${TRAVIS_JOB_ID}"
 	git tag -a "$TAG_NAME" -m "Ruby ${V_} build on Travis job ${TRAVIS_JOB_ID}"
 	git remote add github git@github.com:wkoszek/ruby_packages.git
-	git push --tags github origin
+	git push --tags github
 	./make-release.rb `/bin/ls -1 *.deb` $TAG_NAME
 fi
