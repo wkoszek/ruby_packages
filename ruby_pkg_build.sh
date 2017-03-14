@@ -13,12 +13,13 @@ V_=`echo $V | sed 's{\.{_{g'`
 V_PREFIXED=v${V_}
 V_FILENAME=${V_PREFIXED}.tar.gz
 V_UNZIPPED=ruby-${V_}
+V_URL=https://github.com/ruby/ruby/archive/${V_FILENAME}
 
 echo "# V $V V_ $V_ V_FILENAME $V_FILENAME V_UNZIPPED $V_UNZIPPED"
 
 if [ ! -f "${V_FILENAME}" ]; then
 	echo "# ${V_FILENAME} not found. Will fetch it"
-	wget https://github.com/ruby/ruby/archive/${V_FILENAME}
+	wget $V_URL
 else
 	echo "# ${V_FILENAME} found. Will use it"
 fi
@@ -65,9 +66,9 @@ if [ "x$CI" != "x" ]; then
 	. ~/.ssh/agent_env
 	chmod 600 etc/deploy
 	ssh-add etc/deploy
-	TAG_NAME="${V_PREFIXED}_${TRAVIS_JOB_ID}"
-	git tag -a "$TAG_NAME" -m "Ruby ${V_} build on Travis job ${TRAVIS_JOB_ID}"
+	TAG_NAME="${V_PREFIXED}_${TRAVIS_BUILD_ID}"
+	git tag -a "$TAG_NAME" -m "Ruby ${V_} build on Travis job ${TRAVIS_BUILD_ID}"
 	git remote add github git@github.com:wkoszek/ruby_packages.git
 	git push --tags github
-	./make-release.rb `/bin/ls -1 *.deb` $TAG_NAME
+	./make-release.rb `/bin/ls -1 *.deb` $TAG_NAME $V_URL
 fi

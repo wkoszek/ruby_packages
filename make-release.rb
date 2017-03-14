@@ -26,38 +26,48 @@ def travis_get_info
   return msg
 end
 
-def make_rel_notes_body
-  url = "https://github.com/ruby/ruby/archive/"
+def make_travis_url(build_id)
+  return "https://travis-ci.org/wkoszek/ruby_packages/builds/#{build_id}"
+end
 
+def make_rel_notes_body(url, build_id)
   msg = "## Wojciech's Ruby release"
   msg += "\n"
   msg += "\n"
-  msg += "Release built at #{Time.now} at Travis CI. Ruby version was \`#{VER}\`"
+  msg += "Release built at \`#{Time.now}\` at Travis CI. Ruby version was \`#{VER}\`"
+  msg += "\n"
+  msg += "\n"
+
+  build_id = ENV['TRAVIS_BUILD_ID']
+  travis_url = make_travis_url(build_id)
+  msg += "Build log: [#{travis_url}](#{travis_url})\n"
+
   msg += "\n"
   msg += "\n"
   msg += "The sources for the release came from [#{url}](#{url})."
   msg += "\n"
-  msg += "\n"
+  msg += "\n```\n"
   msg += `openssl sha1 *.tar.gz *.deb 2>/dev/null`
-  msg += "\n"
-  msg += "\n"
+  msg += "\n```\n"
+  msg += "\n```\n"
   msg += travis_get_info()
-  msg += "\n"
+  msg += "\n```\n"
   msg += "\n"
   return msg
 end
 
 def usage
-  STDERR.puts "make-release.rb <file>\n"
+  STDERR.puts "make-release.rb <file> <tagname> <orig_url>\n"
   exit 64
 end
 
 def main
-  if ARGV.length != 2
+  if ARGV.length != 3
     usage()
   end
   asset_filename = ARGV[0]
   tag_name = ARGV[1]
+  rel_url = ARGV[2]
 
   client = Octokit::Client.new(:access_token => GITHUB_TOKEN)
   user = client.user
@@ -67,7 +77,7 @@ def main
 
   rel = client.create_release(REPO_NAME, tag_name, {
     :name => "Ruby #{VER} package #{JOB}",
-    :body => make_rel_notes_body(),
+    :body => make_rel_notes_body(rel_url),
   })
 
   client.upload_asset(rel.url, asset_filename, {
