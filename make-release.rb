@@ -50,7 +50,7 @@ def make_rel_notes_body(url)
 
   msg += '```\n'
   msg += `openssl sha1 *.tar.gz *.deb 2>/dev/null`
-  msg += '```\n'
+  msg += '```\n\n\n'
 
   msg += travis_get_info()
   msg += "\n\n"
