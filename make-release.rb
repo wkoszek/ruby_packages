@@ -48,9 +48,9 @@ def make_rel_notes_body(url)
   msg += "The sources for the release came from [#{url}](#{url})."
   msg += "\n\n"
 
-  msg += '```\n'
+  msg += '```' + "\n"
   msg += `openssl sha1 *.tar.gz *.deb 2>/dev/null`
-  msg += '```\n\n\n'
+  msg += '```' + "\n"
 
   msg += travis_get_info()
   msg += "\n\n"
