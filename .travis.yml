@@ -30,8 +30,6 @@ script:
 - /usr/bin/ruby -v
 - make bootstrap
 - make p
-#after_script:
-#- scripts/submit.sh
 branches:
   only:
     - master
