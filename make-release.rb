@@ -3,6 +3,9 @@
 
 require 'octokit'
 require 'json'
+require './mdserializer.rb'
+
+include MdSerializer
 
 GITHUB_TOKEN = ENV['GITHUB_TOKEN']
 VER = ENV['RUBY_PKG_VERSION']
@@ -20,10 +23,11 @@ REPO_NAME = "wkoszek/ruby_packages"
 def travis_get_info
   env_names = TRAVIS_ENV_VARS
   msg = "## Travis info\n\n"
+  tab = MdSerializer::MdTable.new()
   env_names.each do |en|
-    msg += "\`#{en}\`\t#{ENV[en]}\n"
+    tab.add_row([ MdSerializer::MdTt(en), ENV[en] ]);
   end
-  return msg
+  return msg + tab.to_md
 end
 
 def make_travis_url(build_id)
@@ -34,23 +38,29 @@ def make_rel_notes_body(url)
   msg = "## Wojciech's Ruby release"
   msg += "\n\n"
 
-  msg += "Release built at \`#{Time.now}\` at Travis CI. Ruby version was \`#{VER}\`"
-  msg += "\n\n"
-
-  msg += "Source: [#{url}](#{url})\n\n"
-  msg += "\n\n"
+  tab = MdSerializer::MdTable.new()
+  tab.add_row([
+    "Release built time",
+    Time.now.to_s
+  ]);
+  tab.add_row([
+    "Source",
+    MdSerializer::MdLink(url, url)
+  ]);
 
   build_id = ENV['TRAVIS_BUILD_ID']
   travis_url = make_travis_url(build_id)
-  msg += "Build log: [#{travis_url}](#{travis_url})\n"
-  msg += "\n\n"
+  tab.add_row([
+    "Build log",
+    MdSerializer::MdLink(travis_url, travis_url)
+  ]);
 
-  msg += "The sources for the release came from [#{url}](#{url})."
-  msg += "\n\n"
+  msg += tab.to_md + "\n\n"
 
+  msg += "## Checksums\n\n"
   msg += '```' + "\n"
   msg += `openssl sha1 *.tar.gz *.deb 2>/dev/null`
-  msg += '```' + "\n"
+  msg += '```' + "\n\n"
 
   msg += travis_get_info()
   msg += "\n\n"
