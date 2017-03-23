@@ -24,6 +24,7 @@ def travis_get_info
   env_names = TRAVIS_ENV_VARS
   msg = "## Travis info\n\n"
   tab = MdSerializer::MdTable.new()
+  tab.add_row([ "Environment variable", "Name" ])
   env_names.each do |en|
     tab.add_row([ MdSerializer::MdTt(en), ENV[en] ]);
   end
@@ -39,6 +40,7 @@ def make_rel_notes_body(url)
   msg += "\n\n"
 
   tab = MdSerializer::MdTable.new()
+  tab.add_row([ "Label", "Value" ])
   tab.add_row([
     "Release built time",
     Time.now.to_s
