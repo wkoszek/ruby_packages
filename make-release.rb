@@ -71,6 +71,12 @@ def main
   tag_name = ARGV[1]
   rel_url = ARGV[2]
 
+  notes = make_rel_notes_body(rel_url)
+  if asset_filename == "-sim"
+    print notes, "\n"
+    return
+  end
+
   client = Octokit::Client.new(:access_token => GITHUB_TOKEN)
   user = client.user
   user.login
@@ -79,7 +85,7 @@ def main
 
   rel = client.create_release(REPO_NAME, tag_name, {
     :name => "Ruby #{VER} package #{JOB}",
-    :body => make_rel_notes_body(rel_url),
+    :body => notes,
   })
 
   client.upload_asset(rel.url, asset_filename, {
