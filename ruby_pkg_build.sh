@@ -30,10 +30,8 @@ tar xzf $V_FILENAME
 echo "# Will autoconf and configure the package now"
 (
 	cd ${V_UNZIPPED}
-#	make -f common.mk BASERUBY=ruby MAKEDIRS='mkdir -p' srcdir=.  update-config_files
 	autoconf
 	./configure -C --with-gcc=$CC
-	#./configure -C --disable-install-doc --with-gcc=$CC $CONFIG_FLAG
 )
 
 echo "# Will take the directory from autoconf and build tarball with Makefile"
