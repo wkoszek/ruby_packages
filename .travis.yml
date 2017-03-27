@@ -21,7 +21,7 @@ before_install:
 - git config --global user.name "Wojciech A. Koszek"
 env:
   global:
-  - RUBY_PKG_VERSION=2.4.1
+  - RUBY_PKG_VERSION=2.4.0
 #  matrix:
 #  - RUBYVER=check
 script:
